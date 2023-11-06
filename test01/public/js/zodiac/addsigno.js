@@ -5,6 +5,9 @@ var container = firebase.apps[0].storage().ref();
 const txtPosic = document.querySelector('#txtPosic');
 const txtSigno = document.querySelector('#txtSigno');
 const txtRango = document.querySelector('#txtRango');
+const txtElemento = document.querySelector('#txtElemento');
+const txtAstro = document.querySelector('#txtAstro');
+const txtPiedra = document.querySelector('#txtPiedra');
 const txtArchi = document.querySelector('#txtArchi');
 const btnLoad  = document.querySelector('#btnLoad');
 
@@ -25,6 +28,9 @@ btnLoad.addEventListener('click', function(){
                     "posic" : parseInt(txtPosic.value),
                     "signo" : txtSigno.value,
                     "rango" : txtRango.value,
+                    "Elemento" : txtElemento.value,
+                    "Astro" : txtAstro.value,
+                    "Piedra" : txtPiedra.value,
                     "url"   : url
                 }).then(function(docRef) {
                     alert("ID del registro: " + docRef.id);

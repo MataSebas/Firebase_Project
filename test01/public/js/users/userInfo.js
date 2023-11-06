@@ -1,28 +1,54 @@
-    document.addEventListener("DOMContentLoaded", function() {
-        // Inicializar Firebase Firestore
-        var auth = firebase.apps[0].auth();
+// var auth = firebase.apps[0].auth();
 
-        // Obtener referencia del cuerpo de la tabla
-        const tableBody = document.getElementById("usersTableBody");
+// function getInfo(uid){
+//     getAuth()
+//         .getUser(uid)
+//         .then((userRecord)=>{
+//             console.log(`Información Recuperada correctamente: ${userRecord.toJSON()}`);
 
-        // Consultar la colección donde se almacenan los usuarios
-        db.collection("usuarios").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const userData = doc.data();
 
-                // Crear una nueva fila y celdas para cada usuario
-                let row = tableBody.insertRow();
-                
-                let emailCell = row.insertCell(0);
-                let creationDateCell = row.insertCell(1);
-                let lastAccessDateCell = row.insertCell(2);
+//         })
+//         .catch((error)=>{
+//             console.log('Error al devolver la información:', error)
+//         })
+// }
 
-                // Insertar los datos en las celdas
-                emailCell.textContent = userData.email || "-";
-                creationDateCell.textContent = userData.creationDate || "-";
-                lastAccessDateCell.textContent = userData.lastAccessDate || "-";
+function getInfo() {
+    validar().then(uid => {
+        getAuth().getUser(uid)
+            .then((userRecord) => {
+                console.log(`Información Recuperada correctamente: ${userRecord.toJSON()}`);
+            })
+            .catch((error) => {
+                console.log('Error al devolver la información:', error);
             });
-        }).catch((error) => {
-            console.error("Error al obtener los usuarios: ", error);
-        });
+    }).catch(error => {
+        console.log('Error al validar usuario:', error);
     });
+    return getAuth().getUser(uid);
+}
+
+function showInfo(){
+validar().then(uid => {
+    getInfo(uid)
+        .then((userRecord) => {
+        // Suponiendo que userRecord tiene la estructura con los datos necesarios.
+        let html = `
+            <tr>
+            <td>${userRecord.email}</td>
+            <td>${userRecord.metadata.creationTime}</td>
+            <td>${userRecord.metadata.lastSignInTime}</td>
+            </tr>
+        `;
+        document.getElementById('usersTableBody').innerHTML = html;
+        })
+        .catch((error) => {
+        console.error('Error al devolver la información:', error);
+        });
+    }).catch(error => {
+    console.error('Error al validar usuario:', error);
+    });
+
+}
+
+

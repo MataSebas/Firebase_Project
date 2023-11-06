@@ -15,8 +15,11 @@ rules_version = '2';
       allow create: if request.resource.data.posic is int &&
                 request.resource.data.signo is string &&
                 request.resource.data.rango is string &&
+                request.resource.data.Elemento is string &&
+                request.resource.data.Astro is string &&
+                request.resource.data.Piedra is string &&
                   request.resource.data.url is string;
-      allow update: if false;
+      allow update: if true;
       allow delete: if false;
     }	
     
